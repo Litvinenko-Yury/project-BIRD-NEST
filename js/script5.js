@@ -5,47 +5,30 @@ request.send();
 
 request.addEventListener('load', () => {
     if (request.status === 200) {
-        console.log(request.responseXML);
-        console.log(request.getAllResponseHeaders());
+        // console.log(request.responseXML);
+        // console.log(request.getAllResponseHeaders());
 
-        const dataDrones = getDataFromXML(request); // array
-        console.log(dataDrones); // данные всех дронов
+        /***/
+        const dataDrones = getDataFromXML(request); // данные всех дронов, массив объектов
+        console.log('данные всех дронов');
+        console.log(dataDrones);
 
-        const dronesIntruder = checkDronesViolation(dataDrones);
-        console.log(dronesIntruder); // данные всех дронов-нарушителей
+        /***/
+        const dronesIntruder = checkDronesViolation(dataDrones); // данные всех дронов-нарушителей
+        console.log('данные всех дронов-нарушителей');
+        console.log(dronesIntruder);
 
-        const pilotsIntruder = []// здесь будут данные всех пилотов-нарушителей + данные по дрону: SN+distanse+time
-
-        if (dronesIntruder.length > 0) {
-            //запрос делать по одному serialNumber
-            //нужна функция, которая будет принимать массив нарушителей,
-            // и делать необходимое кол-во запросов.
-            // начнем с одного запроса
-
-            let testPath = `https://assignments.reaktor.com/birdnest/pilots/${dronesIntruder[0].serialNumber}`; // строкa с serialNumber
-
-            const requestPilot = new XMLHttpRequest();
-            requestPilot.open('GET', testPath, true);
-            // request.responseType = 'json';
-            requestPilot.send();
-
-            requestPilot.addEventListener('load', () => {
-                if (requestPilot.status === 200) {
-                    // console.log(JSON.parse(requestPilot.response));
-                    
-
-                    pilotsIntruder.push(JSON.parse(requestPilot.response));  // записать в объект данные пилота + данные по этому пилоту из dronesIntruder[i]
-                    console.log(pilotsIntruder);
+        /***/
+        // let pilotsIntruder = [];
+        let pilotsIntruder = getDataPilotsIntruder(dronesIntruder); // здесь будут данные всех пилотов-нарушителей + данные по дрону: SN+distanse+timeIntruder
+        console.log('данные всех данные пилотов-нарушителей + drone: SN+distanse+timeIntruder');
+        console.log(pilotsIntruder);
 
 
 
-                }
-                else {
-                    console.warn('404')
-                }
-            })
 
-        }
+        // function 
+
 
     }
 })
@@ -81,14 +64,15 @@ function getDataFromXML(data) {
 function checkDronesViolation(arr) {
     const arrTmp = [];
 
-    arr.forEach((item, i) => {
+    arr.forEach((item) => {
         // перебрать dataDrones, проверить на нарушение
         const [firstReturn, lastReturn] = checkZoneViolation(+item.positionX, +item.positionY);
 
         if (firstReturn == false) {
             // console.log(item); // есть нарушение
-            item.distance = lastReturn;
-            arrTmp.push(item); // записать нарушителей в массив 
+            const clone = JSON.parse(JSON.stringify(item)); // item - это объект, делаем глубокое клонирование объекта
+            clone.distance = lastReturn;
+            arrTmp.push(clone); // записать нарушителей в массив 
         }
     });
 
@@ -116,5 +100,37 @@ function checkDronesViolation(arr) {
         } else {
             return [true, distance];
         }
+    }
+}
+
+function getDataPilotsIntruder(arr) {
+    if (arr.length > 0) { // функция примет массив нарушителей
+
+        const arrTmp = [];
+
+        arr.forEach((item) => {
+            const path = `https://assignments.reaktor.com/birdnest/pilots/${item.serialNumber}`; // строкa с serialNumber
+
+            const requestPilot = new XMLHttpRequest();
+            requestPilot.open('GET', path, true);
+            requestPilot.send();
+
+            requestPilot.addEventListener('load', () => {
+                if (requestPilot.status === 200) {
+                    const dataPilot = JSON.parse(requestPilot.response); // ответ сервера
+                    dataPilot.serialNumber = item.serialNumber;
+                    dataPilot.distance = item.distance;
+                    dataPilot.timeIntruder = item.timeStamp;
+
+                    arrTmp.push(dataPilot);  // записать в объект данные пилота-нарушителя + данные по drone из dronesIntruder[i] - SN+distanse+timeIntruder
+
+                }
+                else {
+                    console.warn('404')
+                }
+            })
+        })
+
+        return arrTmp;
     }
 }
