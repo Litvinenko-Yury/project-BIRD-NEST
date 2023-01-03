@@ -1,3 +1,48 @@
+/*Roboto-300*/
+@font-face {
+  font-family: "Roboto";
+  src: local("Roboto Light"), local("Roboto-Light"),
+    url("../fonts/roboto-v30-latin-300.woff2") format("woff2");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+  /*а в html-файле делаем предзагрузку*/
+}
+
+/*Roboto-400*/
+@font-face {
+  font-family: "Roboto";
+  src: local("Roboto Regular"), local("Roboto-Regular"),
+    url("../fonts/roboto-v30-latin-regular.woff2") format("woff2");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+  /*а в html-файле делаем предзагрузку*/
+}
+
+/*Roboto-500*/
+@font-face {
+  font-family: "Roboto";
+  src: local("Roboto Medium"), local("Roboto-Medium"),
+    url("../fonts/roboto-v30-latin-500.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+  /*а в html-файле делаем предзагрузку*/
+}
+
+/*Roboto-700*/
+@font-face {
+  font-family: "Roboto";
+  src: local("Roboto Bold"), local("Roboto-Bold"),
+    url("../fonts/roboto-v30-latin-700.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+  /*а в html-файле делаем предзагрузку*/
+}
+
+
 html {
   box-sizing: border-box;
 }
@@ -22,23 +67,24 @@ body {
   position: relative;
   min-width: 320px;
   margin: 0;
-  font-family: "Open Sans", Arial, Helvetica, sans-serif;
-  font-size: 14px;
-  font-weight: 400;
+  font-family: "Roboto", Arial, Helvetica, sans-serif;
+  font-size: 16px;
+  font-weight: 300;
   line-height: 1em;
   color: #fff;
   color: #d2d2d2;
   direction: ltr;
   background-color: #333;
 
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
-
+  justify-content: space-between;
+  align-items: start;
 }
 
 .canvas {
   display: block;
-  width: 40%;
+  width: 39%;
   flex-shrink: 0;
   background-color: #133337;
 }
@@ -46,16 +92,39 @@ body {
 .table {
   width: 60%;
   flex-shrink: 0;
-
   border-collapse: collapse;
 }
 
-.table__head {
+tbody:hover {
+  background: #474747;
+  /* color: #ce232a;*/
+  cursor: pointer;
+}
+
+.table__caption {
   width: 100%;
+  font-size: 26px;
+  line-height: 1em;
+  font-weight: 400;
+  padding: 25px 0 15px;
+}
+
+.table__head,
+.table__footer{
+  background-color: #282828;
+
 }
 
 .table__title,
 .table__header {
+  padding: 10px;
+  font-size: 20px;
+  font-weight: 500;
   border: 1px solid #fff;
-  padding: 5px;
+}
+
+.table__data {
+  padding: 10px;
+  text-align: center;
+  border: 1px dotted #fff;
 }

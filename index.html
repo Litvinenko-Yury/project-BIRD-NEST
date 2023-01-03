@@ -15,9 +15,9 @@
   <canvas class="canvas" id="canvas"></canvas>
 
   <table class="table">
-    <caption class="table__head">The table head</caption>
+    <caption class="table__caption">Data of intruder pilots for the last 10 minutes</caption>
 
-    <thead>
+    <thead class="table__head">
       <tr class="table__row">
         <th class="table__header">time</th>
         <th class="table__header">distanse</th>
@@ -26,7 +26,7 @@
         <th class="table__header">phone</th>
     </thead>
 
-    <tbody>
+    <tbody class="table__body">
       <tr class="table__row">
         <td class="table__data">10:34</td>
         <td class="table__data">78.56</td>
@@ -34,15 +34,35 @@
         <td class="table__data">Ivan@gmail.com</td>
         <td class="table__data">+123-456789</td>
       </tr>
+    </tbody>
 
+    <tbody class="table__body">
+      <tr class="table__row">
+        <td class="table__data">11:02</td>
+        <td class="table__data">44.65</td>
+        <td class="table__data">Sam</td>
+        <td class="table__data">sam@gmail.com</td>
+        <td class="table__data">+456-654872</td>
+      </tr>
+    </tbody>
 
-      <tfoot>
-        <tr class="table__row">
-          <th class="table__header">time</th>
-          <th class="table__header">distanse</th>
-          <th class="table__header">name</th>
-          <th class="table__header">e-mail</th>
-          <th class="table__header">phone</th>
+    <tbody class="table__body">
+      <tr class="table__row">
+        <td class="table__data">03:32</td>
+        <td class="table__data">05.12</td>
+        <td class="table__data">Nora</td>
+        <td class="table__data">nora@gmail.com</td>
+        <td class="table__data">+777-111222</td>
+      </tr>
+    </tbody>
+
+    <tfoot class="table__footer">
+      <tr class="table__row">
+        <th class="table__header">time</th>
+        <th class="table__header">distanse</th>
+        <th class="table__header">name</th>
+        <th class="table__header">e-mail</th>
+        <th class="table__header">phone</th>
     </tfoot>
   </table>
 
