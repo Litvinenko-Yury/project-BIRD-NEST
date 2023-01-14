@@ -71,15 +71,17 @@ body {
   font-size: 16px;
   font-weight: 300;
   line-height: 1em;
-  color: #fff;
   color: #d2d2d2;
-  direction: ltr;
   background-color: #333;
+}
 
-  min-height: 100vh;
+.page-main {
   display: flex;
   justify-content: space-between;
   align-items: start;
+
+  min-height: 100vh;
+  padding: 15px;
 }
 
 .canvas {
@@ -106,11 +108,23 @@ tbody:hover {
   font-size: 26px;
   line-height: 1em;
   font-weight: 400;
+  text-align: left;
   padding: 25px 0 15px;
 }
 
+.table__subcaption {
+  width: 100%;
+  text-align: left;
+  padding: 0 0 25px;
+  font-weight: 400;
+}
+
+.time {
+  font-weight: 300;
+}
+
 .table__head,
-.table__footer{
+.table__footer {
   background-color: #282828;
 
 }

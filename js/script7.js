@@ -11,27 +11,39 @@ request.addEventListener('load', () => {
         // console.log(request.responseXML);
         // console.log(request.getAllResponseHeaders());
 
-        /***/
-        const dataDrones = getDataFromXML(request); // данные всех дронов, массив объектов
-        console.log('данные всех дронов');
-        console.log(dataDrones);
+        chain();
 
-        /***/
-        const dronesIntruder = checkDronesViolation(dataDrones); // данные всех дронов-нарушителей
-        console.log('данные всех дронов-нарушителей');
-        console.log(dronesIntruder);
+        async function chain() {
 
-        /***/
-        let pilotsIntruder = getDataPilotsIntruder(dronesIntruder); // здесь будут данные всех пилотов-нарушителей + данные по дрону: SN+distanse+timeIntruder
-        console.log('данные всех данные пилотов-нарушителей + drone: SN+distanse+timeIntruder');
-        console.log(pilotsIntruder);
+            const dataDrones = await getDataFromXML(request); // данные всех дронов, массив объектов
+            console.log('данные всех дронов');
+            console.log(dataDrones);
 
-        setCurrentTimeOnPage();
+            const dronesIntruder = await checkDronesViolation(dataDrones); // данные всех дронов-нарушителей
+            console.log('данные всех дронов-нарушителей');
+            console.log(dronesIntruder);
 
-        /***/
-        setTimeout(() => {
-            setContentOnPage(pilotsIntruder);
-        }, 500)
+
+
+            await new Promise(function (resolve) {
+                let pilotsIntruder = getDataPilotsIntruder(dronesIntruder); // здесь будут данные всех пилотов-нарушителей + данные по дрону: SN+distanse+timeIntruder
+                console.log('данные всех данные пилотов-нарушителей + drone: SN+distanse+timeIntruder');
+                console.log(pilotsIntruder);
+
+                resolve(pilotsIntruder);
+
+            });
+
+            await new Promise(function (resolve) {
+                setContentOnPage(pilotsIntruder);
+
+                resolve();
+            });
+
+
+            setCurrentTimeOnPage();
+        }
+
     }
 })
 
@@ -148,7 +160,7 @@ function setContentOnPage(arr) {
         console.log('undefined');
         return;
     } else {
-            arr.forEach((item) => {
+        arr.forEach((item) => {
             console.log(item);
         })
     }
