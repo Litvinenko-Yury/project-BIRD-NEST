@@ -183,8 +183,30 @@ p {
 }
 
 .table__footer {
+  display: none;
   background-color: #282828;
 }
+
+.table__footer--show {
+  display: table-footer-group;
+  background-color: #282828;
+  opacity: 0;
+  animation: fadeIn 1s linear both;
+}
+
+@keyframes fadeIn {
+  0% {
+    display: table-footer-group;
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+
+}
+
+
 
 @media screen and (max-width: 500px) {
 

@@ -2,6 +2,7 @@
 
 setInterval(() => {
     processRequest();
+    showTableFooter();
 }, 5000);
 
 setTimeout(() => {
@@ -177,31 +178,31 @@ function setContentOnPage(arr) {
         })
 
         // проверить записи в таблице на срок 10 мин
-        const timeBDStart = new Date(arr.timeIntruder); // сюда передать timeStamp
-        const timeUserCurrent = new Date(); // здесь получить текущую дату
-        const table = document.querySelector('#table');
-        let rows = table.querySelectorAll('[data-tableBody]');
+        // const timeBDStart = new Date(arr.timeIntruder); // сюда передать timeStamp
+        // const timeUserCurrent = new Date(); // здесь получить текущую дату
+        // const table = document.querySelector('#table');
+        // let rows = table.querySelectorAll('[data-tableBody]');
 
-        function checkEndTimeShow(timeStamp, timeCurrent) {
-            const TIME_INTERVAL = 120000; // 10minutes
-            const timeBDStart = timeStamp;
-            const timeUserCurrent = timeCurrent;
-            const diff = timeBDStart - timeUserCurrent;
-            console.log(timeBDStart);
-            console.log(timeUserCurrent);
-            console.log(diff);
+        // function checkEndTimeShow(timeStamp, timeCurrent) {
+        //     const TIME_INTERVAL = 120000; // 10minutes
+        //     const timeBDStart = timeStamp;
+        //     const timeUserCurrent = timeCurrent;
+        //     const diff = timeBDStart - timeUserCurrent;
+        //     console.log(timeBDStart);
+        //     console.log(timeUserCurrent);
+        //     console.log(diff);
 
 
-            const timeUserCurrentNew = new Date('2023-01-09T10:45:08.421Z');  // здесь получить новую дату
+        //     const timeUserCurrentNew = new Date('2023-01-09T10:45:08.421Z');  // здесь получить новую дату
 
-            if ((timeUserCurrentNew - Math.abs(diff) - timeBDStart) > TIME_INTERVAL) {
-                console.log('> 10minute, remove row');
-                return false;
-            } else {
-                console.log('< 10minute, to do nothing');
-                return true;
-            }
-        }
+        //     if ((timeUserCurrentNew - Math.abs(diff) - timeBDStart) > TIME_INTERVAL) {
+        //         console.log('> 10minute, remove row');
+        //         return false;
+        //     } else {
+        //         console.log('< 10minute, to do nothing');
+        //         return true;
+        //     }
+        // }
 
 
     } else {
@@ -289,6 +290,16 @@ function setCurrentTimeOnPage() {
     const time = document.querySelector('#time');
     let now = new Date();
     time.innerHTML = now;
+}
+
+function showTableFooter() {
+    const arr = document.querySelectorAll('[data-tableBody]');
+
+    if (arr.length > 1) {
+        document.querySelector('#tableFooter').classList.add('table__footer--show');
+    } else {
+        document.querySelector('#tableFooter').classList.remove('table__footer--show');
+    }
 }
 
 
