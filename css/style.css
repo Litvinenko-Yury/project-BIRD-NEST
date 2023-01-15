@@ -180,6 +180,10 @@ p {
   border-collapse: collapse;
 }
 
+.table__body {
+  animation: fadeIn 0.75s linear both;
+}
+
 .table__body:hover {
   background: #474747;
   cursor: pointer;

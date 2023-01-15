@@ -3,7 +3,7 @@
 setInterval(() => {
     processRequest();
     showTableFooter();
-}, 5000);
+}, 2000);
 
 setTimeout(() => {
     setInterval(() => {
@@ -215,7 +215,7 @@ function setContentOnTable(arr) {
 
 
         tableHead.insertAdjacentHTML('afterend',
-            `<tbody class="table__body" data-tableBody data-pilotID="${data.pilotId}" data-timeIntruder="${data.timeIntruder}" data-diff="${diff}" data-timeUserStart="${timeUserStart}">
+            `<tbody class="table__body" data-tableBody data-pilotID="${data.pilotId}" data-timeIntruder="${data.timeIntruder}" data-diff="${diff}">
             <tr class="table__row">
               <td class="table__data">${strTimeIntruder}</td>
               <td class="table__data">${data.distance.toFixed(2)}m</td>
