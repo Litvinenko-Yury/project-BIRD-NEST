@@ -130,18 +130,37 @@ p {
 }
 
 .caption {
+  margin-bottom: 15px;
   font-size: 26px;
   line-height: 1em;
   font-weight: 400;
   text-align: left;
-  padding: 0 0 15px;
 }
 
 .subcaption {
-  padding: 0 0 25px;
+  margin-bottom: 15px;
   font-weight: 400;
   text-align: left;
 }
+
+.text {
+  position: relative;
+  width: fit-content;
+  margin-bottom: 25px;
+}
+
+.text::before {
+  content: '';
+  position: absolute;
+  z-index: 10;
+  top: 0;
+  right: -40px;
+  width: 40px;
+  height: 100%;
+  background: url('../img/icon.svg') center;
+  background-size: cover;
+}
+
 
 .time {
   font-weight: 300;
@@ -227,13 +246,21 @@ p {
   }
 
   .caption {
-    padding-bottom: 10px;
+    margin-bottom: 10px;
     font-size: 22px;
   }
 
   .subcaption {
-    padding-bottom: 10px;
+    margin-bottom: 10px;
     font-size: 13px;
+  }
+
+  .text {
+    font-size: 13px;
+  }
+
+  .text {
+    margin-bottom: 10px;
   }
 
   .table {
@@ -266,6 +293,10 @@ p {
     font-size: 13px;
   }
 
+  .text {
+    font-size: 13px;
+  }
+
   .table {
     font-size: 11px;
   }
@@ -295,12 +326,17 @@ p {
   }
 
   .caption {
-    padding-bottom: 10px;
+    margin-bottom: 10px;
     font-size: 20px;
   }
 
   .subcaption {
-    padding-bottom: 10px;
+    margin-bottom: 10px;
+    font-size: 14px;
+  }
+
+  .text {
+    margin-bottom: 10px;
     font-size: 14px;
   }
 }

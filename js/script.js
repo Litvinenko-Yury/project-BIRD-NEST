@@ -21,26 +21,25 @@ function processRequest() {
     request.addEventListener('load', () => {
         if (request.status === 200) {
             // console.log(request.responseXML);
-            // console.log(request.getAllResponseHeaders());
 
             chain();
             async function chain() {
                 // просто функция, в которой, что-бы использовать  await, нужно добавить async
 
                 const dataDrones = await getDataFromXML(request); // данные всех дронов, массив объектов
-                console.log('***данные всех дронов***');
-                console.log(dataDrones); // массив объектов
+                // console.log('***данные всех дронов***');
+                // console.log(dataDrones); // массив объектов
 
                 const dronesIntruder = await checkDronesViolation(dataDrones); // данные всех дронов-нарушителей, массив объектов
-                console.log('***данные всех дронов-нарушителей***');
-                console.log(dronesIntruder); // массив объектов
+                // console.log('***данные всех дронов-нарушителей***');
+                // console.log(dronesIntruder); // массив объектов
 
                 const pilotsIntruder = await getDataPilotsIntruder(dronesIntruder); // данные всех пилотов-нарушителей + данные по дрону: SN+distanse+timeIntruder, массив объектов
                 -//const pilotsIntruder = await getDataPilotsIntruderNew(dronesIntruder);
-                    console.log('***данные всех данные пилотов-нарушителей + drone: SN+distanse+timeIntruder***');
-                console.log(pilotsIntruder); // массив объектов
+                    // console.log('***данные всех данные пилотов-нарушителей + drone: SN+distanse+timeIntruder***');
+                // console.log(pilotsIntruder); // массив объектов
 
-                setContentOnPage(pilotsIntruder);
+                setContentOnTable(pilotsIntruder);
                 setCurrentTimeOnPage();
             }
         }
@@ -78,7 +77,7 @@ async function getDataFromXML(data) {
 }
 
 async function checkDronesViolation(arr) {
-    console.log(`arr.length: ${arr.length}`);
+    // console.log(`arr.length: ${arr.length}`);
 
     return new Promise((resolve) => {
         const arrTmp = [];
@@ -167,46 +166,16 @@ async function getDataPilotsIntruder(arr) {
     }
 }
 
-
-function setContentOnPage(arr) {
+function setContentOnTable(arr) {
     // arr - массив объектов с данными пилотов
     if (arr != undefined) {
         arr.forEach((item) => { //item - данные по пилоту
-            console.log(item);
+            // console.log(item);
             removeDuplicateEntryOnTable(item) // delete duplicate entry
             insertRowOnTable(item); // add new entry
         })
-
-        // проверить записи в таблице на срок 10 мин
-        // const timeBDStart = new Date(arr.timeIntruder); // сюда передать timeStamp
-        // const timeUserCurrent = new Date(); // здесь получить текущую дату
-        // const table = document.querySelector('#table');
-        // let rows = table.querySelectorAll('[data-tableBody]');
-
-        // function checkEndTimeShow(timeStamp, timeCurrent) {
-        //     const TIME_INTERVAL = 120000; // 10minutes
-        //     const timeBDStart = timeStamp;
-        //     const timeUserCurrent = timeCurrent;
-        //     const diff = timeBDStart - timeUserCurrent;
-        //     console.log(timeBDStart);
-        //     console.log(timeUserCurrent);
-        //     console.log(diff);
-
-
-        //     const timeUserCurrentNew = new Date('2023-01-09T10:45:08.421Z');  // здесь получить новую дату
-
-        //     if ((timeUserCurrentNew - Math.abs(diff) - timeBDStart) > TIME_INTERVAL) {
-        //         console.log('> 10minute, remove row');
-        //         return false;
-        //     } else {
-        //         console.log('< 10minute, to do nothing');
-        //         return true;
-        //     }
-        // }
-
-
     } else {
-        console.log(`arr undefined`);
+        // console.log(`arr undefined`);
         return;
     }
 
@@ -238,11 +207,11 @@ function setContentOnPage(arr) {
         const timeUserStart = new Date().toISOString(); // string, получить текущую дату
         const diff = Date.parse(timeBDStart) - Date.parse(timeUserStart);
 
-        console.log(localTime);
-        console.log(timeBDStart);
-        console.log(timeUserStart);
-        console.log(diff);
-        console.log(userTimezoneOffset);
+        // console.log(localTime);
+        // console.log(timeBDStart);
+        // console.log(timeUserStart);
+        // console.log(diff);
+        // console.log(userTimezoneOffset);
 
 
         tableHead.insertAdjacentHTML('afterend',
@@ -272,16 +241,11 @@ function removeContentOnPage() {
     rows.forEach(item => {
         const timeBDStart = item.getAttribute('data-timeintruder');
         const diff = item.getAttribute('data-diff');
-        // console.log(timeUserCurrent);
-        // console.log(Math.abs(diff));
-        // console.log(timeBDStart);
-        console.log(Date.parse(timeUserCurrent) - Math.abs(diff) - Date.parse(timeBDStart));
+        // console.log(Date.parse(timeUserCurrent) - Math.abs(diff) - Date.parse(timeBDStart));
 
         if ((Date.parse(timeUserCurrent) - Math.abs(diff) - Date.parse(timeBDStart)) > TIME_INTERVAL) {
             item.remove();
-            console.log('> 10minute, remove row');
-        } else {
-            console.log('< 10minute, to do nothing');
+            // console.log('> 10minute, remove row');
         }
     })
 }
