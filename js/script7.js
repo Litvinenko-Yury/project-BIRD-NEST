@@ -1,6 +1,5 @@
 'use strict';
 
-
 const request = new XMLHttpRequest();
 request.open('GET', 'https://assignments.reaktor.com/birdnest/drones', true);
 request.responseType = 'document';
@@ -23,23 +22,11 @@ request.addEventListener('load', () => {
             console.log('данные всех дронов-нарушителей');
             console.log(dronesIntruder);
 
+            const pilotsIntruder = await getDataPilotsIntruder(dronesIntruder); // здесь будут данные всех пилотов-нарушителей + данные по дрону: SN+distanse+timeIntruder
+            console.log('данные всех данные пилотов-нарушителей + drone: SN+distanse+timeIntruder');
+            console.log(pilotsIntruder);
 
-
-            await new Promise(function (resolve) {
-                let pilotsIntruder = getDataPilotsIntruder(dronesIntruder); // здесь будут данные всех пилотов-нарушителей + данные по дрону: SN+distanse+timeIntruder
-                console.log('данные всех данные пилотов-нарушителей + drone: SN+distanse+timeIntruder');
-                console.log(pilotsIntruder);
-
-                resolve(pilotsIntruder);
-
-            });
-
-            await new Promise(function (resolve) {
-                setContentOnPage(pilotsIntruder);
-
-                resolve();
-            });
-
+            setContentOnPage(pilotsIntruder);
 
             setCurrentTimeOnPage();
         }
@@ -50,7 +37,7 @@ request.addEventListener('load', () => {
 
 /***/
 /***/
-function getDataFromXML(data) {
+async function getDataFromXML(data) {
     // функ., получить answer, вернуть dataDrones
     const answer = data.responseXML;
     const timeStamp = answer.querySelector('capture').getAttribute('snapshotTimestamp');
@@ -75,7 +62,7 @@ function getDataFromXML(data) {
     return tmpDataDrones;
 }
 
-function checkDronesViolation(arr) {
+async function checkDronesViolation(arr) {
     const arrTmp = [];
 
     arr.forEach((item) => {
@@ -117,7 +104,7 @@ function checkDronesViolation(arr) {
     }
 }
 
-function getDataPilotsIntruder(arr) {
+async function getDataPilotsIntruder(arr) {
     if (arr.length > 0) { // функция примет массив нарушителей
 
         const arrTmp = [];
@@ -149,11 +136,7 @@ function getDataPilotsIntruder(arr) {
     }
 }
 
-function setCurrentTimeOnPage() {
-    const time = document.querySelector('#time');
-    let now = new Date();
-    time.innerHTML = now;
-}
+
 
 function setContentOnPage(arr) {
     if (arr == undefined) {
@@ -164,4 +147,10 @@ function setContentOnPage(arr) {
             console.log(item);
         })
     }
+}
+
+function setCurrentTimeOnPage() {
+    const time = document.querySelector('#time');
+    let now = new Date();
+    time.innerHTML = now;
 }

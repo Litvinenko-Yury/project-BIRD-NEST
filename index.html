@@ -4,79 +4,309 @@
 <head>
   <title>test-reactor</title>
   <meta charset="utf-8">
-  <meta name="viewport"
-    content="width=device-width, initial-scale=1.0, maximum-scale=1.0,user-scalable=no,viewport-fit=cover" />
-  <link media="all" rel="stylesheet" href="./css/style.min.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover" />
+  <link media="all" rel="stylesheet" href="./css/style.css">
   <link rel="icon" type="image/png" href="./img/favicon.svg">
 </head>
 
 <body>
   <main class="page-main">
-    <canvas class="canvas" id="canvas"></canvas>
+    <!-- <canvas class="canvas" id="canvas" width="500" height="500"></canvas> -->
 
-    <table class="table">
-      <caption class="table__caption">Data of intruder pilots for the last 10 minutes</caption>
-      <caption class="table__subcaption">latest data update: <span class="time" id="time"></span></caption>
+    <div class="data-wrap">
+      <h1 class="caption">Data of intruder pilots for the last 10 minutes</h1>
+      <p class="subcaption">latest data update: <span class="time" id="time"></span></p>
 
-      <thead class="table__head">
-        <tr class="table__row">
-          <th class="table__header">time</th>
-          <th class="table__header">distanse</th>
-          <th class="table__header">name</th>
-          <th class="table__header">e-mail</th>
-          <th class="table__header">phone</th>
-      </thead>
+      <div class="table-wrap  scrollbar">
+        <table class="table" id="table">
 
-      <tbody class="table__body">
-        <tr class="table__row">
-          <td class="table__data">10:34</td>
-          <td class="table__data">78.56</td>
-          <td class="table__data">Ivan</td>
-          <td class="table__data">Ivan@gmail.com</td>
-          <td class="table__data">+123-456789</td>
-        </tr>
-      </tbody>
+          <thead class="table__head" id="tableHead">
+            <tr class="table__row">
+              <th class="table__header">time</th>
+              <th class="table__header">distanse</th>
+              <th class="table__header">name</th>
+              <th class="table__header">e-mail</th>
+              <th class="table__header">phone</th>
+          </thead>
 
-      <tbody class="table__body">
-        <tr class="table__row">
-          <td class="table__data">11:02</td>
-          <td class="table__data">44.65</td>
-          <td class="table__data">Sam</td>
-          <td class="table__data">sam@gmail.com</td>
-          <td class="table__data">+456-654872</td>
-        </tr>
-      </tbody>
+          <tbody class="table__body">
+            <tr class="table__row" data-pilotID="">
+              <td class="table__data  table__data--1">10:34</td>
+              <td class="table__data  table__data--2">78.56</td>
+              <td class="table__data  table__data--3">Ivan</td>
+              <td class="table__data  table__data--4">Ivan@gmail.com</td>
+              <td class="table__data  table__data--5">+123-456789</td>
+            </tr>
+          </tbody>
 
-      <tbody class="table__body">
-        <tr class="table__row">
-          <td class="table__data">03:32</td>
-          <td class="table__data">05.12</td>
-          <td class="table__data">Nora</td>
-          <td class="table__data">nora@gmail.com</td>
-          <td class="table__data">+777-111222</td>
-        </tr>
-      </tbody>
+          <tbody class="table__body">
+            <tr class="table__row" data-pilotID="">
+              <td class="table__data">10:34</td>
+              <td class="table__data">78.56</td>
+              <td class="table__data">Ivan</td>
+              <td class="table__data">Ivan@gmail.com</td>
+              <td class="table__data">+123-456789</td>
+            </tr>
+          </tbody>
 
-      <tfoot class="table__footer">
-        <tr class="table__row">
-          <th class="table__header">time</th>
-          <th class="table__header">distanse</th>
-          <th class="table__header">name</th>
-          <th class="table__header">e-mail</th>
-          <th class="table__header">phone</th>
-      </tfoot>
-    </table>
+          <tbody class="table__body">
+            <tr class="table__row" data-pilotID="">
+              <td class="table__data">10:34</td>
+              <td class="table__data">78.56</td>
+              <td class="table__data">Ivan</td>
+              <td class="table__data">Ivan@gmail.com</td>
+              <td class="table__data">+123-456789</td>
+            </tr>
+          </tbody>
+
+          <tbody class="table__body">
+            <tr class="table__row" data-pilotID="">
+              <td class="table__data">10:34</td>
+              <td class="table__data">78.56</td>
+              <td class="table__data">Ivan</td>
+              <td class="table__data">Ivan@gmail.com</td>
+              <td class="table__data">+123-456789</td>
+            </tr>
+          </tbody>
+
+          <tbody class="table__body">
+            <tr class="table__row" data-pilotID="">
+              <td class="table__data">10:34</td>
+              <td class="table__data">78.56</td>
+              <td class="table__data">Ivan</td>
+              <td class="table__data">Ivan@gmail.com</td>
+              <td class="table__data">+123-456789</td>
+            </tr>
+          </tbody>
+
+          <tbody class="table__body">
+            <tr class="table__row" data-pilotID="">
+              <td class="table__data">10:34</td>
+              <td class="table__data">78.56</td>
+              <td class="table__data">Ivan</td>
+              <td class="table__data">Ivan@gmail.com</td>
+              <td class="table__data">+123-456789</td>
+            </tr>
+          </tbody>
+
+          <tbody class="table__body">
+            <tr class="table__row" data-pilotID="">
+              <td class="table__data">10:34</td>
+              <td class="table__data">78.56</td>
+              <td class="table__data">Ivan</td>
+              <td class="table__data">Ivan@gmail.com</td>
+              <td class="table__data">+123-456789</td>
+            </tr>
+          </tbody>
+
+          <tbody class="table__body">
+            <tr class="table__row" data-pilotID="">
+              <td class="table__data">10:34</td>
+              <td class="table__data">78.56</td>
+              <td class="table__data">Ivan</td>
+              <td class="table__data">Ivan@gmail.com</td>
+              <td class="table__data">+123-456789</td>
+            </tr>
+          </tbody>
+
+          <tbody class="table__body">
+            <tr class="table__row" data-pilotID="">
+              <td class="table__data">10:34</td>
+              <td class="table__data">78.56</td>
+              <td class="table__data">Ivan</td>
+              <td class="table__data">Ivan@gmail.com</td>
+              <td class="table__data">+123-456789</td>
+            </tr>
+          </tbody>
+
+          <tbody class="table__body">
+            <tr class="table__row" data-pilotID="">
+              <td class="table__data">10:34</td>
+              <td class="table__data">78.56</td>
+              <td class="table__data">Ivan</td>
+              <td class="table__data">Ivan@gmail.com</td>
+              <td class="table__data">+123-456789</td>
+            </tr>
+          </tbody>
+
+          <tbody class="table__body">
+            <tr class="table__row" data-pilotID="">
+              <td class="table__data">10:34</td>
+              <td class="table__data">78.56</td>
+              <td class="table__data">Ivan</td>
+              <td class="table__data">Ivan@gmail.com</td>
+              <td class="table__data">+123-456789</td>
+            </tr>
+          </tbody>
+
+          <tbody class="table__body">
+            <tr class="table__row" data-pilotID="">
+              <td class="table__data">10:34</td>
+              <td class="table__data">78.56</td>
+              <td class="table__data">Ivan</td>
+              <td class="table__data">Ivan@gmail.com</td>
+              <td class="table__data">+123-456789</td>
+            </tr>
+          </tbody>
+
+          <tbody class="table__body">
+            <tr class="table__row" data-pilotID="">
+              <td class="table__data">10:34</td>
+              <td class="table__data">78.56</td>
+              <td class="table__data">Ivan</td>
+              <td class="table__data">Ivan@gmail.com</td>
+              <td class="table__data">+123-456789</td>
+            </tr>
+          </tbody>
+
+          <tbody class="table__body">
+            <tr class="table__row" data-pilotID="">
+              <td class="table__data">10:34</td>
+              <td class="table__data">78.56</td>
+              <td class="table__data">Ivan</td>
+              <td class="table__data">Ivan@gmail.com</td>
+              <td class="table__data">+123-456789</td>
+            </tr>
+          </tbody>
+
+          <tbody class="table__body">
+            <tr class="table__row" data-pilotID="">
+              <td class="table__data">10:34</td>
+              <td class="table__data">78.56</td>
+              <td class="table__data">Ivan</td>
+              <td class="table__data">Ivan@gmail.com</td>
+              <td class="table__data">+123-456789</td>
+            </tr>
+          </tbody>
+
+          <tbody class="table__body">
+            <tr class="table__row" data-pilotID="">
+              <td class="table__data">10:34</td>
+              <td class="table__data">78.56</td>
+              <td class="table__data">Ivan</td>
+              <td class="table__data">Ivan@gmail.com</td>
+              <td class="table__data">+123-456789</td>
+            </tr>
+          </tbody>
+
+          <tbody class="table__body">
+            <tr class="table__row" data-pilotID="">
+              <td class="table__data">10:34</td>
+              <td class="table__data">78.56</td>
+              <td class="table__data">Ivan</td>
+              <td class="table__data">Ivan@gmail.com</td>
+              <td class="table__data">+123-456789</td>
+            </tr>
+          </tbody>
+
+          <tbody class="table__body">
+            <tr class="table__row" data-pilotID="">
+              <td class="table__data">10:34</td>
+              <td class="table__data">78.56</td>
+              <td class="table__data">Ivan</td>
+              <td class="table__data">Ivan@gmail.com</td>
+              <td class="table__data">+123-456789</td>
+            </tr>
+          </tbody>
+
+          <tbody class="table__body">
+            <tr class="table__row" data-pilotID="">
+              <td class="table__data">10:34</td>
+              <td class="table__data">78.56</td>
+              <td class="table__data">Ivan</td>
+              <td class="table__data">Ivan@gmail.com</td>
+              <td class="table__data">+123-456789</td>
+            </tr>
+          </tbody>
+
+          <tbody class="table__body">
+            <tr class="table__row" data-pilotID="">
+              <td class="table__data">10:34</td>
+              <td class="table__data">78.56</td>
+              <td class="table__data">Ivan</td>
+              <td class="table__data">Ivan@gmail.com</td>
+              <td class="table__data">+123-456789</td>
+            </tr>
+          </tbody>
+
+          <tbody class="table__body">
+            <tr class="table__row" data-pilotID="">
+              <td class="table__data">10:34</td>
+              <td class="table__data">78.56</td>
+              <td class="table__data">Ivan</td>
+              <td class="table__data">Ivan@gmail.com</td>
+              <td class="table__data">+123-456789</td>
+            </tr>
+          </tbody>
+
+          <tbody class="table__body">
+            <tr class="table__row" data-pilotID="">
+              <td class="table__data">10:34</td>
+              <td class="table__data">78.56</td>
+              <td class="table__data">Ivan</td>
+              <td class="table__data">Ivan@gmail.com</td>
+              <td class="table__data">+123-456789</td>
+            </tr>
+          </tbody>
+
+          <tbody class="table__body">
+            <tr class="table__row" data-pilotID="">
+              <td class="table__data">10:34</td>
+              <td class="table__data">78.56</td>
+              <td class="table__data">Ivan</td>
+              <td class="table__data">Ivan@gmail.com</td>
+              <td class="table__data">+123-456789</td>
+            </tr>
+          </tbody>
+
+          <tbody class="table__body">
+            <tr class="table__row" data-pilotID="">
+              <td class="table__data">10:34</td>
+              <td class="table__data">78.56</td>
+              <td class="table__data">Ivan</td>
+              <td class="table__data">Ivan@gmail.com</td>
+              <td class="table__data">+123-456789</td>
+            </tr>
+          </tbody>
+
+          <tbody class="table__body">
+            <tr class="table__row" data-pilotID="">
+              <td class="table__data">10:34</td>
+              <td class="table__data">78.56</td>
+              <td class="table__data">Ivan</td>
+              <td class="table__data">Ivan@gmail.com</td>
+              <td class="table__data">+123-456789</td>
+            </tr>
+          </tbody>
+
+          <tfoot class="table__footer">
+            <tr class="table__row">
+              <th class="table__header">time</th>
+              <th class="table__header">distanse</th>
+              <th class="table__header">name</th>
+              <th class="table__header">e-mail</th>
+              <th class="table__header">phone</th>
+          </tfoot>
+        </table>
+      </div>
+
+    </div>
   </main>
 
 
+  <!-- <script src="js/script7.js"></script> -/->
+  <!-- <script src="js/1-then.js"></script> -->
+  <!-- <script src="js/2-async-await.js"></script> -->
+  <!-- <script src="js/2-async-await-v2.js"></script> -->
+  <!-- <script src="js/3-async-await-bad.js"></script> -->
+  <!-- <script src="js/test.js"></script> -->
+  <!-- <script src="js/test-time.js"></script> -->
 
-  <!-- <script src="js/script.js"></script> -->
-  <!-- <script src="js/script2.js"></script> -->
-  <!-- <script src="js/script3.js"></script> -->
-  <!-- <script src="js/script4.js"></script> -->
-  <!-- <script src="js/script5.js"></script> -->
-  <!-- <script src="js/script6.js"></script> -->
-  <script src="js/script7.js"></script>
+
+  <!-- <script src="js/script7.js"></script> -->
+  <!-- <script src="js/script7-2.js"></script> -->
+
+  <!-- <script src="js/script7-3.js"></script> -->
 </body>
 
 </html>

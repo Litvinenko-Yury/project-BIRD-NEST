@@ -1,39 +1,48 @@
 'use strict';
 
 
-const request = new XMLHttpRequest();
-request.open('GET', 'https://assignments.reaktor.com/birdnest/drones', true);
-request.responseType = 'document';
-request.send();
-
-request.addEventListener('load', () => {
-    if (request.status === 200) {
-        // console.log(request.responseXML);
-        // console.log(request.getAllResponseHeaders());
-
-        /***/
-        const dataDrones = getDataFromXML(request); // данные всех дронов, массив объектов
+new Promise(function (resolve) {
+    const request = new XMLHttpRequest();
+    request.open('GET', 'https://assignments.reaktor.com/birdnest/drones', true);
+    request.responseType = 'document';
+    request.send();
+    request.addEventListener('load', () => {
+        if (request.status === 200) {
+            resolve(request);
+        }
+    });
+}).then((data) => {
+        // console.log(result);
+        const dataDrones = getDataFromXML(data); // данные всех дронов, массив объектов
+        console.log('************');
         console.log('данные всех дронов');
         console.log(dataDrones);
 
-        /***/
-        const dronesIntruder = checkDronesViolation(dataDrones); // данные всех дронов-нарушителей
+        return dataDrones;
+    }).then((data) => {
+        // console.log(result);
+        const dronesIntruder = checkDronesViolation(data); // данные всех дронов-нарушителей
         console.log('данные всех дронов-нарушителей');
         console.log(dronesIntruder);
 
-        /***/
-        let pilotsIntruder = getDataPilotsIntruder(dronesIntruder); // здесь будут данные всех пилотов-нарушителей + данные по дрону: SN+distanse+timeIntruder
+        return dronesIntruder;
+    }).then((data) => {
+        // console.log(result);
+        let pilotsIntruder = getDataPilotsIntruder(data); // здесь будут данные всех пилотов-нарушителей + данные по дрону: SN+distanse+timeIntruder
         console.log('данные всех данные пилотов-нарушителей + drone: SN+distanse+timeIntruder');
         console.log(pilotsIntruder);
 
-        setCurrentTimeOnPage();
+        return pilotsIntruder;
+    }).then((data) => {
+        // console.log(data);
 
-        /***/
         setTimeout(() => {
-            setContentOnPage(pilotsIntruder);
-        }, 500)
-    }
-})
+            setContentOnPage(data);
+        }, 100)
+
+    }).then((result) => {
+        setCurrentTimeOnPage();
+    })
 
 
 /***/
@@ -107,7 +116,6 @@ function checkDronesViolation(arr) {
 
 function getDataPilotsIntruder(arr) {
     if (arr.length > 0) { // функция примет массив нарушителей
-
         const arrTmp = [];
 
         arr.forEach((item) => {
@@ -148,8 +156,11 @@ function setContentOnPage(arr) {
         console.log('undefined');
         return;
     } else {
-            arr.forEach((item) => {
+        arr.forEach((item) => {
             console.log(item);
+            // сформировать и вставить контент в таблицу
+            // возможно, нужна будет функция для этого
         })
+
     }
 }
