@@ -200,8 +200,9 @@ p {
 }
 
 .table__data {
-  padding: 10px 5px;
+  padding: 10px 3px;
   text-align: center;
+  word-break: break-all;
   border: 1px dotted rgba(255, 255, 255, 0.5);
 }
 
@@ -226,8 +227,16 @@ p {
   100% {
     opacity: 1;
   }
-
 }
+
+
+@media screen and (max-width: 768px) {
+  .table__header {
+    padding: 10px 2px;
+    font-size: 12px;
+  }
+}
+
 
 
 
@@ -268,7 +277,12 @@ p {
   }
 
   .table {
-    font-size: 12px;
+    font-size: 11px;
+  }
+
+
+  .table__header--1 {
+    font-size: 10px;
   }
 }
 

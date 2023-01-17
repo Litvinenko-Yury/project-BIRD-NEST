@@ -9,7 +9,7 @@ setTimeout(() => {
     setInterval(() => {
         removeContentOnPage(); // проверить записи в таблице на срок 10 мин
     }, 1000);
-}, 2000);
+}, 2000); // старт через 10мин
 
 
 function processRequest() {
@@ -20,25 +20,11 @@ function processRequest() {
 
     request.addEventListener('load', () => {
         if (request.status === 200) {
-            // console.log(request.responseXML);
-
             chain();
             async function chain() {
-                // просто функция, в которой, что-бы использовать  await, нужно добавить async
-
                 const dataDrones = await getDataFromXML(request); // данные всех дронов, массив объектов
-                // console.log('***данные всех дронов***');
-                // console.log(dataDrones); // массив объектов
-
                 const dronesIntruder = await checkDronesViolation(dataDrones); // данные всех дронов-нарушителей, массив объектов
-                // console.log('***данные всех дронов-нарушителей***');
-                // console.log(dronesIntruder); // массив объектов
-
                 const pilotsIntruder = await getDataPilotsIntruder(dronesIntruder); // данные всех пилотов-нарушителей + данные по дрону: SN+distanse+timeIntruder, массив объектов
-                -//const pilotsIntruder = await getDataPilotsIntruderNew(dronesIntruder);
-                    // console.log('***данные всех данные пилотов-нарушителей + drone: SN+distanse+timeIntruder***');
-                // console.log(pilotsIntruder); // массив объектов
-
                 setContentOnTable(pilotsIntruder);
                 setCurrentTimeOnPage();
             }
@@ -77,8 +63,7 @@ async function getDataFromXML(data) {
 }
 
 async function checkDronesViolation(arr) {
-    // console.log(`arr.length: ${arr.length}`);
-
+    
     return new Promise((resolve) => {
         const arrTmp = [];
 
@@ -87,7 +72,7 @@ async function checkDronesViolation(arr) {
             const [firstReturn, lastReturn] = checkZoneViolation(+item.positionX, +item.positionY);
 
             if (firstReturn == false) {
-                // console.log(item); // есть нарушение
+                // есть нарушение
                 const clone = JSON.parse(JSON.stringify(item)); // item - это объект, делаем глубокое клонирование объекта
                 clone.distance = lastReturn;
                 arrTmp.push(clone); // записать нарушителей в массив 
@@ -123,7 +108,6 @@ async function checkDronesViolation(arr) {
 }
 
 async function getDataPilotsIntruder(arr) {
-    // console.log(`arr.length: ${arr.length}`);
 
     if (arr.length > 0) { // функция примет массив нарушителей
         const arrTmp = [];
@@ -161,7 +145,6 @@ async function getDataPilotsIntruder(arr) {
         }
 
         await Promise.allSettled(arrPromise);
-        // console.log(arrTmp.length)
         return arrTmp;
     }
 }
@@ -170,35 +153,17 @@ function setContentOnTable(arr) {
     // arr - массив объектов с данными пилотов
     if (arr != undefined) {
         arr.forEach((item) => { //item - данные по пилоту
-            // console.log(item);
-            removeDuplicateEntryOnTable(item) // delete duplicate entry
             insertRowOnTable(item); // add new entry
         })
     } else {
-        // console.log(`arr undefined`);
         return;
     }
 
     /***/
-    function removeDuplicateEntryOnTable(data) {
-        // проверить записи в таблице на наличие pilotID
-        //если такая запись есть, удалить её
-        const table = document.querySelector('#table');
-        let rows = table.querySelectorAll('[data-tableBody]');
-        rows.forEach(itemRows => {
-            if (itemRows.getAttribute('data-pilotID') == data.pilotId) {
-                itemRows.remove();
-            }
-        });
-    }
-
     function insertRowOnTable(data) {
-        //new name - formingStringForTable
-
         // data - данные по пилоту
 
         const tableHead = document.querySelector('#tableHead');
-
         const userTimezoneOffset = (new Date().getTimezoneOffset()) * 60000; // здесь смещение часового пояса пользователя, мс
         const localTime = new Date(Date.parse(data.timeIntruder) - userTimezoneOffset).toISOString(); // string in ISO
         const strTimeIntruder = localTime.slice(localTime.indexOf('T') + 1, localTime.length - 5); // часть строки для показа в таблице
@@ -207,29 +172,59 @@ function setContentOnTable(arr) {
         const timeUserStart = new Date().toISOString(); // string, получить текущую дату
         const diff = Date.parse(timeBDStart) - Date.parse(timeUserStart);
 
-        // console.log(localTime);
-        // console.log(timeBDStart);
-        // console.log(timeUserStart);
-        // console.log(diff);
-        // console.log(userTimezoneOffset);
+        const newDistance = data.distance.toFixed(2); // distance свежая
 
+        const table = document.querySelector('#table');
+        let rows = table.querySelectorAll('[data-tableBody]');
 
-        tableHead.insertAdjacentHTML('afterend',
-            `<tbody class="table__body" data-tableBody data-pilotID="${data.pilotId}" data-timeIntruder="${data.timeIntruder}" data-diff="${diff}">
-            <tr class="table__row">
-              <td class="table__data">${strTimeIntruder}</td>
-              <td class="table__data">${data.distance.toFixed(2)}m</td>
-              <td class="table__data">${data.firstName} ${data.lastName}</td>
-              <td class="table__data">${data.email}</td>
-              <td class="table__data">${data.phoneNumber}</td>
-            </tr>
-          </tbody>`
+        if (rows.length > 0) {
+            // таблица не пустая
+            // ПРОВЕРИТЬ ВСЕ ЗАПИСИ, И ЕСЛИ ЕСТЬ СОВПАДЕНИЕ, СДЕЛАТЬ ДЕЙСТВИЕ
+            let coindencePilotID = 0;
+            rows.forEach((itemRows, i) => {
+                // посмотреть строку таблицы itemRows, есть такой пилот?
+                if (itemRows.getAttribute('data-pilotID') === data.pilotId) {
+                    coindencePilotID++;
+                    // запись/пилот есть
+                    // проверить distance
+                    const oldDistance = itemRows.querySelector('[data-distance]').getAttribute('data-distance');
 
-            // return строку с разметкой
-        );
+                    if (newDistance < oldDistance) {
+                        // записываю newDistance
+                        itemRows.querySelector('[data-distance]').setAttribute('data-distance', `${newDistance}m`);
+                        itemRows.querySelector('[data-distance]').innerHTML = `${newDistance}m`;
+                    } else {
+                        // оставляю oldDistance
+                    }
+                }
+            });
+
+            if (coindencePilotID == 0) {
+                // в таблице записи/пилотa нет
+                saveNewDataOnTable();  //записать новую строку
+            }
+        }
+        // таблица пустая
+        else {
+            // таблица пустая, записать новую строку
+            saveNewDataOnTable();
+        }
+
+        function saveNewDataOnTable() {
+            tableHead.insertAdjacentHTML('afterend',
+                `<tbody class="table__body" data-tableBody data-pilotID="${data.pilotId}" data-timeIntruder="${data.timeIntruder}" data-diff="${diff}">
+        <tr class="table__row">
+          <td class="table__data">${strTimeIntruder}</td>
+          <td class="table__data" data-distance="${data.distance.toFixed(2)}">${data.distance.toFixed(2)}m</td>
+          <td class="table__data">${data.firstName} ${data.lastName}</td>
+          <td class="table__data">${data.email}</td>
+          <td class="table__data">${data.phoneNumber}</td>
+        </tr>
+      </tbody>`
+            );
+        }
     }
 }
-
 
 /**/
 function removeContentOnPage() {
@@ -241,11 +236,8 @@ function removeContentOnPage() {
     rows.forEach(item => {
         const timeBDStart = item.getAttribute('data-timeintruder');
         const diff = item.getAttribute('data-diff');
-        // console.log(Date.parse(timeUserCurrent) - Math.abs(diff) - Date.parse(timeBDStart));
-
         if ((Date.parse(timeUserCurrent) - Math.abs(diff) - Date.parse(timeBDStart)) > TIME_INTERVAL) {
-            item.remove();
-            // console.log('> 10minute, remove row');
+            item.remove(); // > 10minute, remove row
         }
     })
 }
